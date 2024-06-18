@@ -43,16 +43,24 @@ const listUsers = async (fastify, opt, done) => {
         },
         handler: async (request, reply) => {
 
-            let usersReceived = { users: [] }
-            await searchUsers()
-                .then(usersFind => {
-                    usersReceived.users.push(...usersFind)
-                })
-                .catch(err => {
-                    console.error('Error search users', err)
-                })
+            try {
 
-            return usersReceived
+                let usersReceived = { users: [] }
+                await searchUsers()
+                    .then(usersFind => {
+                        usersReceived.users.push(...usersFind)
+                    })
+                    .catch(err => {
+                        console.error('Error search users', err)
+                    })
+
+                reply.code(200).send(usersReceived);
+
+            } catch (error) {
+                console.log(error)
+                reply.code(500).send({ code: '500', message: 'Internal Server Error' });
+
+            }
         }
     })
     done();
@@ -106,17 +114,23 @@ const searchLikeUserbyName = async (fastify, opt, done) => {
             }
         },
         handler: async (request, reply) => {
-            const { searchLike } = request.query
-            let usersReceived = { users: [] }
-            await searchUserLikeName(searchLike)
-                .then(usersFind => {
-                    usersReceived.users.push(...usersFind)
-                })
-                .catch(err => {
-                    console.error('Error search users', err)
-                })
+            try {
+                const { searchLike } = request.query
+                let usersReceived = { users: [] }
+                await searchUserLikeName(searchLike)
+                    .then(usersFind => {
+                        usersReceived.users.push(...usersFind)
+                    })
+                    .catch(err => {
+                        console.error('Error search users', err)
+                    })
 
-            return usersReceived
+                reply.code(200).send(usersReceived);
+
+            } catch (error) {
+                console.log(error)
+                reply.code(500).send({ code: '500', message: 'Internal Server Error' });
+            }
         }
     })
     done();
@@ -163,17 +177,24 @@ const getUserById = async (fastify, opt, done) => {
             }
         },
         handler: async (request, reply) => {
-            const { userId } = request.query;
-            let userReceived = null
-            await searchUserById(userId)
-                .then(userFind => {
-                    userReceived = userFind
-                })
-                .catch(err => {
-                    console.error('Error search user', err)
-                })
+            try {
+                const { userId } = request.query;
+                let userReceived = null
+                await searchUserById(userId)
+                    .then(userFind => {
+                        userReceived = userFind
+                    })
+                    .catch(err => {
+                        console.error('Error search user', err)
+                    })
 
-            return userReceived
+                reply.code(201).send(userReceived);
+
+            } catch (error) {
+                console.log(error)
+                reply.code(500).send({ code: '500', message: 'Internal Server Error' });
+
+            }
         }
     })
     done();
@@ -304,9 +325,6 @@ const updateUser = async (fastify, opt, done) => {
         }
     });
     done();
-
-
-
 }
 
 

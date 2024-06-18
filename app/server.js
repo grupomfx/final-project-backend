@@ -5,7 +5,7 @@ import fastifyCors from '@fastify/cors';
 
 import {
     listProducts,
-    getProductById,
+    getProductsBySearchLikeName,
     RegisterNewProduct,
     updateProductById,
     deleteProductById
@@ -25,6 +25,7 @@ import {
     createNewSession,
     expireSession
 } from "./routes/v1/login.controller.js"
+import { searchProductsLikeName } from './repositories/product.repository.js';
 
 
 const app = Fastify({
@@ -65,7 +66,13 @@ app.register(fastifySwaggerUI, {
         tags: [{
             name: 'User',
             description: 'User API'
-        },],
+        },
+        {
+            name: 'Products',
+            description: 'Products API'
+
+        }
+        ],
     },
     uiConfig: {
         docExpansion: 'none', // expande/não todas as documentações none|list|full 
@@ -89,7 +96,7 @@ app.register(fastifySwaggerUI, {
 // Rotas de produtos 
 
 app.register(listProducts, { prefix: '/v1/products' })
-app.register(getProductById, { prefix: '/v1/products' })
+app.register(getProductsBySearchLikeName, { prefix: '/v1/products' })
 app.register(RegisterNewProduct, { prefix: '/v1/products' })
 app.register(updateProductById, { prefix: '/v1/products' })
 app.register(deleteProductById, { prefix: '/v1/products' })
