@@ -61,7 +61,7 @@ const getProductsBySearchLikeName = async (fastify, opt, done) => {
                     }
                 },
                 404: {
-                    description: 'Users not found',
+                    description: 'products not found',
                     type: 'object',
                     properties: {
                         code: {
