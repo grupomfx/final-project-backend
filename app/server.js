@@ -64,7 +64,7 @@ app.register(fastifySwaggerUI, {
         consumes: ['application/json'],
         produces: ['application/json'],
         tags: [{
-            name: 'User',
+            name: 'Users',
             description: 'User API'
         },
         {

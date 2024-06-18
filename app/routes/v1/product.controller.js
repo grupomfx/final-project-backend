@@ -28,7 +28,8 @@ const getProductsBySearchLikeName = async (fastify, opt, done) => {
             querystring: {
                 type: 'object',
                 properties: {
-                    searchLike: { type: 'string', description: 'search user like by name' }
+                    searchName: { type: 'string', description: 'search products like by name' },
+                    page: { type: 'string', description: 'page' }
                 },
             },
             response: {
@@ -36,6 +37,9 @@ const getProductsBySearchLikeName = async (fastify, opt, done) => {
                     description: 'Return products list model',
                     type: 'object',
                     properties: {
+                        totalPages: { type: 'string' },
+                        pageSize: { type: 'string' },
+                        pageNumber: { tupe: 'string' },
                         products: {
                             type: 'array',
                             items: {
@@ -73,12 +77,21 @@ const getProductsBySearchLikeName = async (fastify, opt, done) => {
         handler: async (request, reply) => {
 
             try {
-                const { searchLike } = request.query
-                let productsReceived = { products: [] }
+                const { searchName, page } = request.query
 
-                await searchProductsLikeName(searchLike)
+                let productsReceived = {
+                    totalPages: null,
+                    pageSize: null,
+                    pageNumber: null,
+                    products: []
+                }
+
+                await searchProductsLikeName(searchName, page, 25)
                     .then(productsFind => {
-                        productsReceived.products.push(...productsFind)
+                        productsReceived.products.push(...productsFind.products)
+                        productsReceived.pageNumber = productsFind.pageNumber
+                        productsReceived.pageSize = productsFind.pageSize
+                        productsReceived.totalPages = productsFind.totalPages
                     })
                     .catch(err => {
                         console.error('Error search products', err)

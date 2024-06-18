@@ -8,7 +8,7 @@ const listUsers = async (fastify, opt, done) => {
         schema: {
             summary: 'Get users data',
             description: 'Return a given users data',
-            tags: ['User'],
+            tags: ['Users'],
             response: {
                 200: {
                     description: 'Return user list model',
@@ -74,7 +74,7 @@ const searchLikeUserbyName = async (fastify, opt, done) => {
         schema: {
             summary: 'Get users data',
             description: 'Return a given users data by name',
-            tags: ['User'],
+            tags: ['Users'],
             querystring: {
                 type: 'object',
                 properties: {
@@ -145,7 +145,7 @@ const getUserById = async (fastify, opt, done) => {
         schema: {
             summary: 'Get user data',
             description: 'Return a given user data',
-            tags: ['User'],
+            tags: ['Users'],
             querystring: {
                 type: 'object',
                 properties: {
@@ -207,7 +207,7 @@ const RegisterNewUser = async (fastify, opt, done) => {
         schema: {
             summary: 'Create new user',
             description: 'Create a new user data',
-            tags: ['User'],
+            tags: ['Users'],
             body: {
                 type: 'object',
                 properties: {
@@ -267,7 +267,7 @@ const updateUser = async (fastify, opt, done) => {
         schema: {
             summary: 'Update existing user',
             description: 'Create a new user data',
-            tags: ['User'],
+            tags: ['Users'],
             querystring: {
                 type: 'object',
                 properties: {
