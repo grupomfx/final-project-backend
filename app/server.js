@@ -15,8 +15,9 @@ import {
     listUsers,
     getUserById,
     RegisterNewUser,
-    updateUserById,
-    deleteUserById
+    updateUser,
+    deleteUserById,
+    searchLikeUserbyName
 } from "./routes/v1/user.controller.js"
 
 import {
@@ -97,8 +98,9 @@ app.register(deleteProductById, { prefix: '/v1/products' })
 
 app.register(listUsers, { prefix: '/v1/users' })
 app.register(getUserById, { prefix: '/v1/users' })
+app.register(searchLikeUserbyName, { prefix: '/v1/users' })
 app.register(RegisterNewUser, { prefix: '/v1/users' })
-app.register(updateUserById, { prefix: '/v1/users' })
+app.register(updateUser, { prefix: '/v1/users' })
 app.register(deleteUserById, { prefix: '/v1/users' })
 
 
