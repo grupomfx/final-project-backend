@@ -11,7 +11,6 @@ export const searchUsers = () => {
                 reject(err);
             } else {
                 console.log(row);
-                // resolve with row.author or null
                 resolve(row);
             }
         });
@@ -26,7 +25,6 @@ export const searchUserById = (userId) => {
                 console.log(err.message);
                 reject(err)
             } else {
-                //console.log(row);
                 resolve(row === undefined ? {} : row);
             }
         })
@@ -41,7 +39,6 @@ export const searchUserLikeName = (nameSeachLike) => {
                 console.log(err.message);
                 reject(err)
             } else {
-                //console.log(row);
                 resolve(row === undefined ? [] : row);
             }
         })

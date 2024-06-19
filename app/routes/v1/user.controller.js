@@ -328,22 +328,6 @@ const updateUser = async (fastify, opt, done) => {
 }
 
 
-const deleteUserById = async (fastify, opt, done) => {
-    fastify.get("/delete", () => {
-        try {
-
-
-        } catch (error) {
-
-        }
-
-    })
-    done()
-    return { hello: 'world' }
-
-}
-
-
-export { listUsers, getUserById, RegisterNewUser, updateUser, deleteUserById, searchLikeUserbyName }
+export { listUsers, getUserById, RegisterNewUser, updateUser, searchLikeUserbyName }
 
 
