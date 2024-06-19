@@ -25,7 +25,6 @@ import {
     createNewSession,
     expireSession
 } from "./routes/v1/login.controller.js"
-import { searchProductsLikeName } from './repositories/product.repository.js';
 
 
 const app = Fastify({

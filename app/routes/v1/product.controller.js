@@ -1,5 +1,5 @@
 
-import { searchProductsLikeName } from "../../repositories/product.repository.js"
+import { searchProductsLikeName, insertNewProduct } from "../../repositories/product.repository.js"
 
 const listProducts = async (fastify, opt, done) => {
     fastify.get("/list", () => {
@@ -111,21 +111,78 @@ const getProductsBySearchLikeName = async (fastify, opt, done) => {
 }
 
 
+
 const RegisterNewProduct = async (fastify, opt, done) => {
-    fastify.get("/register", () => {
-        try {
+    fastify.route({
+        method: 'POST',
+        url: '/',
+        schema: {
+            summary: 'Create new product',
+            description: 'Create a new user data',
+            tags: ['Products'],
+            body: {
+                type: 'object',
+                properties: {
+                    name: { type: 'string' },
+                    description: { type: 'string' },
+                    price: { type: 'string' },
+                    unit: { type: 'string' },
+                    image_url: { type: 'string' },
+                    status: { type: 'string' },
+                    category: { type: 'string' },
 
+                },
+                required: ['name', 'description', 'price', 'unit', 'image_url', 'status', 'category']
+            },
+            response: {
+                201: {
+                    description: 'Product created successfully',
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        name: { type: 'string' },
+                        description: { type: 'string' },
+                        price: { type: 'string' },
+                        unit: { type: 'string' },
+                        image_url: { type: 'string' },
+                        status: { type: 'string' },
+                        category: { type: 'string' },
+                        created_at: { type: 'string' },
+                        updated_at: { type: 'string' }
+                    }
+                },
+                400: {
+                    description: 'Invalid request body or parameters',
+                    type: 'object',
+                    properties: {
+                        code: { type: 'string' },
+                        message: { type: 'string' }
+                    }
+                }
+            }
+        },
+        handler: async (request, reply) => {
+            try {
+                const { name, description, price, unit, image_url, status, category, created_at, updated_at } = request.body;
+                const product = { name, description, price, unit, image_url, status, category, created_at, updated_at }
+                let response = null
+                await insertNewProduct(product)
+                    .then(insertedProduct => {
+                        response = insertedProduct
+                    })
+                    .catch(err => {
+                        console.error('Cant not insert product', err)
+                    })
 
-        } catch (error) {
-
+                reply.code(201).send(response);
+            } catch (error) {
+                console.log(error)
+                reply.code(500).send({ code: '500', message: 'Internal Server Error' });
+            }
         }
-
-    })
-    done()
-    return { hello: 'world' }
-
+    });
+    done();
 }
-
 
 const updateProductById = async (fastify, opt, done) => {
     fastify.get("/update", () => {
