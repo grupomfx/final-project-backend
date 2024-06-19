@@ -4,11 +4,8 @@ import fastifySwaggerUI from '@fastify/swagger-ui';
 import fastifyCors from '@fastify/cors';
 
 import {
-    listProducts,
     getProductsBySearchLikeName,
     RegisterNewProduct,
-    updateProductById,
-    deleteProductById
 } from "./routes/v1/product.controller.js"
 
 import {
@@ -16,16 +13,8 @@ import {
     getUserById,
     RegisterNewUser,
     updateUser,
-    deleteUserById,
     searchLikeUserbyName
 } from "./routes/v1/user.controller.js"
-
-import {
-    validateCredentials,
-    createNewSession,
-    expireSession
-} from "./routes/v1/login.controller.js"
-
 
 const app = Fastify({
     logger: true
@@ -94,11 +83,8 @@ app.register(fastifySwaggerUI, {
 
 // Rotas de produtos 
 
-app.register(listProducts, { prefix: '/v1/products' })
 app.register(getProductsBySearchLikeName, { prefix: '/v1/products' })
 app.register(RegisterNewProduct, { prefix: '/v1/products' })
-app.register(updateProductById, { prefix: '/v1/products' })
-app.register(deleteProductById, { prefix: '/v1/products' })
 
 // Rotas de usuario
 
@@ -107,14 +93,8 @@ app.register(getUserById, { prefix: '/v1/users' })
 app.register(searchLikeUserbyName, { prefix: '/v1/users' })
 app.register(RegisterNewUser, { prefix: '/v1/users' })
 app.register(updateUser, { prefix: '/v1/users' })
-app.register(deleteUserById, { prefix: '/v1/users' })
 
 
-// Rotas de login
-
-app.register(validateCredentials, { prefix: '/v1/login' })
-app.register(createNewSession, { prefix: '/v1/login' })
-app.register(expireSession, { prefix: '/v1/login' })
 
 
 try {
